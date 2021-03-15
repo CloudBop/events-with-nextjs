@@ -3,6 +3,9 @@ import { useRouter } from "next/router";
 import { getFilteredEvents } from "../../dummy-data";
 import EventList from "../../components/events/event-list";
 import ResultsTitle from "../../components/events/results-title";
+import Button from "../../components/ui/button";
+import ErrorAlert from "../../components/ui/error-alert";
+
 function FilteredEvents() {
   const router = useRouter();
 
@@ -16,7 +19,16 @@ function FilteredEvents() {
 
   // defense
   if (isNaN(numMonth) || isNaN(numYear) || numMonth < 1 || numMonth > 12) {
-    return <p>Invalid data, please try again</p>;
+    return (
+      <>
+        <ErrorAlert>
+          <p>Invalid data, please try again</p>;
+        </ErrorAlert>
+        <div className="center">
+          <Button link="/events">Show All Events</Button>
+        </div>
+      </>
+    );
   }
 
   const events = getFilteredEvents({
@@ -25,10 +37,20 @@ function FilteredEvents() {
   });
 
   if (!events.length || events.length === 0) {
-    return <p>No Events Found</p>;
+    return (
+      <>
+        <ErrorAlert>
+          <p>No Events Found</p>
+        </ErrorAlert>
+        <div className="center">
+          <Button link="/events">Show All Events</Button>
+        </div>
+      </>
+    );
   }
-
+  // remeber jan ===0
   const date = new Date(numYear, numMonth - 1);
+
   return (
     <div>
       <ResultsTitle date={date} />
