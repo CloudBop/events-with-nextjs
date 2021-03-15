@@ -8,9 +8,8 @@ import EventLogistics from "../../components/event-detail/event-logistics";
 
 function EventDetailPage() {
   const r = useRouter();
-  console.log(`r`, r);
+  // format is regex of r.query.eventId === [eventId]
   const evtId = r.query.eventId;
-  console.log(`evtId`, evtId);
   const evt = getEventById(evtId);
 
   if (!evt) {
